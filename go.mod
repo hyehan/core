@@ -225,11 +225,11 @@ replace (
 )
 
 replace (
-	github.com/CosmWasm/wasmd => github.com/classic-terra/wasmd v0.45.0-classic
+	github.com/CosmWasm/wasmd => github.com/classic-terra/wasmd v0.45.0-terra
 	// use cometbft
-	github.com/cometbft/cometbft => github.com/classic-terra/cometbft v0.37.4-classic
+	github.com/cometbft/cometbft => github.com/classic-terra/cometbft v0.37.4-terra1
 	github.com/cometbft/cometbft-db => github.com/cometbft/cometbft-db v0.8.0
-	github.com/cosmos/cosmos-sdk => github.com/classic-terra/cosmos-sdk v0.47.10-classic
+	github.com/cosmos/cosmos-sdk => github.com/classic-terra/cosmos-sdk v0.47.10-terra
 	github.com/cosmos/ibc-go/v7 => github.com/classic-terra/ibc-go/v7 v7.0.0-20240419072319-aa9d74dc39ae
 	github.com/cosmos/ledger-cosmos-go => github.com/terra-money/ledger-terra-go v0.11.2
 	// replace goleveldb to optimized one
