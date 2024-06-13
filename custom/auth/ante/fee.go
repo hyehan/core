@@ -50,14 +50,14 @@ func (fd FeeDecorator) AnteHandle(ctx sdk.Context, tx sdk.Tx, simulate bool, nex
 	// Compute taxes
 	taxes := FilterMsgAndComputeTax(ctx, fd.treasuryKeeper, msgs...)
 
-	if !simulate {
+	//if !simulate {
 		priority, err = fd.checkTxFee(ctx, tx, taxes)
 		if err != nil {
 			return ctx, err
 		}
-	}
+	//}
 
-	if err := fd.checkDeductFee(ctx, feeTx, taxes, simulate); err != nil {
+	if err := fd.checkDeductFee(ctx, feeTx, taxes, false); err != nil {
 		return ctx, err
 	}
 
@@ -144,7 +144,7 @@ func DeductFees(bankKeeper types.BankKeeper, ctx sdk.Context, acc types.AccountI
 // unit of gas is fixed and set by each validator, can the tx priority is computed from the gas price.
 // Transaction with only oracle messages will skip gas fee check and will have the most priority.
 // It also checks enough fee for treasury tax
-func (fd FeeDecorator) checkTxFee(ctx sdk.Context, tx sdk.Tx, taxes sdk.Coins) (int64, error) {
+func (fd FeeDecorator) checkTxFee(ctx sdk.Context, tx sdk.Tx, taxes sdk.Coins, simulate bool) (int64, error) {
 	feeTx, ok := tx.(sdk.FeeTx)
 	if !ok {
 		return 0, errorsmod.Wrap(sdkerrors.ErrTxDecode, "Tx must be a FeeTx")
@@ -183,7 +183,7 @@ func (fd FeeDecorator) checkTxFee(ctx sdk.Context, tx sdk.Tx, taxes sdk.Coins) (
 
 	priority := int64(math.MaxInt64)
 
-	if !isOracleTx {
+	if !isOracleTx && !simulate {
 		priority = getTxPriority(feeCoins, int64(gas))
 	}
 
