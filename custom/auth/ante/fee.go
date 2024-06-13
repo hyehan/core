@@ -51,7 +51,7 @@ func (fd FeeDecorator) AnteHandle(ctx sdk.Context, tx sdk.Tx, simulate bool, nex
 	taxes := FilterMsgAndComputeTax(ctx, fd.treasuryKeeper, msgs...)
 
 	//if !simulate {
-		priority, err = fd.checkTxFee(ctx, tx, taxes)
+		priority, err = fd.checkTxFee(ctx, tx, taxes, simulate)
 		if err != nil {
 			return ctx, err
 		}
